@@ -3,7 +3,7 @@
 using namespace std;
 
 template <typename T>
-class Arr
+class Array
 {
 
 	T* array;
@@ -11,7 +11,7 @@ class Arr
 
 public:
 
-	Arr(T size) {
+	Array(T size) {
 		array = new T[size];
 
 		this->size = size;
@@ -19,9 +19,7 @@ public:
 		for (size_t i = 0; i < this->size; i++) array[i] = 0;
 	}
 
-	Arr() = default;
-
-	~Arr() { delete[] array; }
+	Array() = default;
 
 
 	void append(int a)
@@ -37,8 +35,6 @@ public:
 
 		array[this->size] = a;
 		this->size++;
-
-		delete TempArray;
 	}
 
 
@@ -59,8 +55,6 @@ public:
 		array = new T[this->size];
 
 		for (size_t i = 0; i < this->size; i++) array[i] = TempArray[i];
-
-		delete TempArray;
 	}
 
 
@@ -80,8 +74,6 @@ public:
 		}
 
 		size--;
-
-		delete TempArray;
 	}
 
 
@@ -101,18 +93,16 @@ public:
 		}
 
 		size -= count;
-
-		delete TempArray;
 	}
 
 
-	void destroy(Arr<T> arr)
+	void destroy(Array<T> arr)
 	{
 		size_t count = 0;
 
 		T* TempArray = new T[this->size];
 
-		
+
 		for (size_t i = 0; i < this->size; i++)
 		{
 			bool include = true;
@@ -140,130 +130,92 @@ public:
 		this->array = new T[this->size];
 
 		for (size_t i = 0; i < this->size; i++) this->array[i] = TempArray[i];
-
-		delete TempArray;
 	}
 
 
-	T at(size_t index) { return array[index]; }
+	size_t length()
+	{
+		return this->size;
+	}
 
 
-	size_t length() { return this->size; }
-
-	T& operator[](size_t index) { return this->array[index]; }
-
+	T& operator[](size_t index)
+	{
+		return this->array[index];
+	}
 
 };
 
 int main()
 {
-	setlocale(0, "");
+	Array<int> arr;
+	int size, count, temp;
 
-	Arr<int> array(5);
-	Arr<int> temp(3);
+	cout << "array size: ";
+	cin >> size;
 
-	for (size_t i = 0; i < 5; i++) array[i] = i;
+	for (size_t i = 0; i < size; i++)
+	{
+		cout << i + 1 << ") ";
+		cin >> temp;
 
-	for (size_t i = 0; i < 3; i++) temp[i] = i;
+		arr.append(temp);
+	}
 
-
-	for (size_t i = 0; i < array.length(); i++) cout << array[i] << " ";
 	cout << endl;
 
-	for (size_t i = 0; i < temp.length(); i++) cout << temp[i] << " ";
-	cout << endl;
+	for (size_t i = 0; i < arr.length(); i++) cout << arr[i] << " ";
+
+	cout << "\n" << endl;
 
 
-	array.destroy(temp);
-
-	for (size_t i = 0; i < array.length(); i++) cout << array[i] << " ";
-	cout << endl;
-
-	cout << "whjegbfjh" << endl;
-	cout << "whjegbfjh" << endl;
-	cout << "whjegbfjh" << endl;
-	cout << "whjegbfjh" << endl;
-	cout << "whjegbfjh" << endl;
-	cout << "whjegbfjh" << endl;
-	cout << "whjegbfjh" << endl;
-
-	/*Arr<int> array(5);
-	int index, value;
-
-	array.output();
-
+	cout << "destroy(index): " << endl;
+	
 	cout << "index: ";
-	cin >> index;
-	cout << "value: ";
-	cin >> value;
-
-	array.insert(index, value);
-
-	array.output();
-
-	array[index + 1] = 5;
-	array.output();
-
-	cout << array[index];*/
-
-	/*size_t temp;
-
-	cout << "размер массива: ";
 	cin >> temp;
 
-	Arr<int> array(temp);
-	array.output();
+	arr.destroy(temp);
 
-	cout << "добавить: ";
-	cin >> temp;
+	for (size_t i = 0; i < arr.length(); i++) cout << arr[i] << " ";
 
-	array.append(temp);
-	array.output();
+	cout << "\n" << endl;
 
-	cout << "удалить: ";
-	cin >> temp;
 
-	array.destroy(temp);
-	array.output();*/
-
-	/*setlocale(LC_ALL, "ru");
-	Arr<int> arr(7);
-
-	cout << "после конструктора от 7:" << endl;
-	arr.output();
-	cout << endl;
-
-	arr.append(8);
-	cout << "после append(8):" << endl;
-	arr.output();
-	cout << endl;
-
-	for (size_t i = 0; i < arr.length(); i++) arr.set_element(i, i + 1);
-	cout << "после set_element(i, i + 1):" << endl;
-	arr.output();
-	cout << endl;
-
-	arr.destroy(2);
-	cout << "после destroy(2):" << endl;
-	arr.output();
-	cout << endl;
-
-	arr.append(0);
-	arr.output();
-
-	for (size_t i = 0; i < arr.length(); i++) arr.set_element(i, i + 1);
-	arr.output();
-	cout << endl;
-
-	int index, count;
-
+	cout << "destroy(index, count): " << endl;
 	cout << "index: ";
-	cin >> index;
+	cin >> temp;
+
 	cout << "count: ";
 	cin >> count;
 
-	cout << "после destroy(" << index << ", " << count << "):" << endl;
-	arr.destroy(index, count);
-	arr.output();
-	cout << endl;*/
+	arr.destroy(temp, count);
+
+	for (size_t i = 0; i < arr.length(); i++) cout << arr[i] << " ";
+
+	cout << "\n" << endl;
+
+
+	cout << "destroy(array):" << endl;
+
+	cout << "array size: ";
+	cin >> size;
+
+	Array<int> temp_arr(size);
+
+	for (size_t i = 0; i < size; i++)
+	{
+		cout << i + 1 << ") ";
+		cin >> temp_arr[i];
+	}
+
+	for (size_t i = 0; i < temp_arr.length(); i++) cout << temp_arr[i] << " ";
+
+	cout << "\n" << endl;
+
+	arr.destroy(temp_arr);
+
+
+	for (size_t i = 0; i < arr.length(); i++) cout << arr[i] << " ";
+
+	cout << endl;
 }
